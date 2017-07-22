@@ -46,3 +46,8 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
+# Config
+config/
+
+# IDE
+.idea/
