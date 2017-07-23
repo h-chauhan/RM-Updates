@@ -4,3 +4,6 @@ Get updates as they happen on [Resume Manager](http://tnp.dtu.ac.in/rm_2016-17/)
 
 ## Privacy policy
 Read the [privacy policy](PrivacyPolicy). 
+
+## Heroku URL
+https://rmupdates.herokuapp.com/
