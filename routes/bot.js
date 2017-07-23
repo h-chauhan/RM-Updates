@@ -13,8 +13,10 @@ router.post("/", connector.listen());
 const userStore = [];
 const bot = new builder.UniversalBot(connector, function (session) {
     // store user's address
-    const address = session.message.address;
-    userStore.push(address);
+    userStore.push({
+        id: session.message.user.id,
+        address: session.message.address
+    });
 
     // end current dialog
     session.endDialog('Hey there! We will ask you a few questions to get started...');
@@ -22,13 +24,13 @@ const bot = new builder.UniversalBot(connector, function (session) {
 
 // Every 5 seconds, check for new registered users and start a new dialog
 setInterval(function () {
-    const newAddresses = userStore.splice(0);
-    newAddresses.forEach(function (address) {
+    const newIds = userStore.splice(0);
+    newIds.forEach(function (obj) {
 
-        console.log('Starting survey', address);
+        console.log('Starting survey', obj.id);
 
         // new conversation address, copy without conversationId
-        const newConversationAddress = Object.assign({}, address);
+        const newConversationAddress = Object.assign({}, obj.address);
 
         // start survey dialog
         bot.beginDialog(newConversationAddress, 'survey', null, function (err) {
