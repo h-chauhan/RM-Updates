@@ -42,7 +42,7 @@ setInterval(function () {
         });
 
     });
-}, 60000);
+}, 5000);
 
 bot.dialog('survey', [
     function (session) {
