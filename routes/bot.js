@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const builder = require('botbuilder');
-var firebase = require('firebase');
+const firebase = require('firebase');
 firebase.initializeApp(require('../config/firebaseConfig'));
-var database = firebase.database();
-var userRef = database.ref('users/');
+const database = firebase.database();
+const userRef = database.ref('users/');
 
 
 // Create chat connector for communicating with the Bot Framework Service
@@ -17,7 +17,7 @@ router.post("/", connector.listen());
 
 const bot = new builder.UniversalBot(connector, function (session) {
     // store user's address
-    var newUser = userRef.child(session.message.user.id);
+    const newUser = userRef.child(session.message.user.id);
     newUser.set({
         address: session.message.address
     });
@@ -30,7 +30,7 @@ const bot = new builder.UniversalBot(connector, function (session) {
 userRef.limitToLast(1).on('child_added', function (snapshot) {
 
     // all records after the last continue to invoke this function
-    var newUserID = snapshot.key;
+    const newUserID = snapshot.key;
     console.log('Starting survey', newUserID);
 
     const newConversationAddress = Object.assign({}, snapshot.val().address);
@@ -58,9 +58,7 @@ bot.dialog('survey', [
     },
     function (session, results) {
         userRef.child(session.message.user.id).child("updateType").set(results.response.entity);
-        session.endDialog('Got it... ' + session.userData.name +
-            ' you want updates for ' + session.userData.updateType +
-            ' Resume Manager.');
+        session.endDialog('Got it... ');
     }
 ]);
 
