@@ -1,7 +1,6 @@
 # Logs
 logs
 *.log
-npm-debug.log*
 
 # Runtime data
 pids
@@ -51,3 +50,5 @@ config/
 
 # IDE
 .idea/
+.idea/workspace.xml
+.vscode/
