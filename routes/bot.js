@@ -29,7 +29,6 @@ setInterval(function () {
 
         // new conversation address, copy without conversationId
         const newConversationAddress = Object.assign({}, address);
-        delete newConversationAddress.conversation;
 
         // start survey dialog
         bot.beginDialog(newConversationAddress, 'survey', null, function (err) {
@@ -57,7 +56,7 @@ bot.dialog('survey', [
     function (session, results) {
         session.userData.updateType = results.response.entity;
         session.endDialog('Got it... ' + session.userData.name +
-            ' you want updates for ' + session.userData.coding +
+            ' you want updates for ' + session.userData.updateType +
             ' Resume Manager.');
     }
 ]);
