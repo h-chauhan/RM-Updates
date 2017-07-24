@@ -23,7 +23,7 @@ const bot = new builder.UniversalBot(connector, function (session) {
     });
 
     // end current dialog
-    session.endDialog('Hey there! We will ask you a few questions to get started...');
+    session.endDialog('Hey there!');
 });
 
 // Every 5 seconds, check for new registered users and start a new dialog
@@ -41,7 +41,7 @@ userRef.limitToLast(1).on('child_added', function (snapshot) {
             // error ocurred while starting new conversation. Channel not supported?
             bot.send(new builder.Message()
                 .text('This channel does not support this operation: ' + err.message)
-                .address(address));
+                .address(newConversationAddress));
         }
     });
 });

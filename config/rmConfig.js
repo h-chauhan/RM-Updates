@@ -1,5 +1,7 @@
+require('dotenv').config();
+
 module.exports = {
-    loginUrl: "http://127.0.0.1:8000/admin/login/?next=/admin/",
-    username: "admin",
-    password: "admin"
+    loginUrl: "http://tnp.dtu.ac.in/rm_2016-17/login/",
+    username: process.env.RM_LOGIN_USERNAME,
+    password: process.env.RM_LOGIN_PASSWORD
 };

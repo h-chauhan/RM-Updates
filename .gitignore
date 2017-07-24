@@ -46,8 +46,12 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
-# Config
+# Git Merge
+*.orig
 
 # IDE
 .idea/
 .vscode/
+
+# ENV Variable
+.env
