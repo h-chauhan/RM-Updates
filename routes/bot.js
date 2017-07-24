@@ -18,13 +18,18 @@ router.post("/", connector.listen());
 const bot = new builder.UniversalBot(connector, function (session) {
     // store user's address
     const newUser = userRef.child(session.message.user.id);
-    newUser.set({
-        address: session.message.address,
-        createdAt: firebase.database.ServerValue.TIMESTAMP
-    });
+
+    newUser.child("address").set(session.message.address);
 
     // end current dialog
     session.endDialog('Hey there!');
+});
+
+userRef.on('child_added', function (snapshot) {
+   if(!snapshot.hasChild("createdAt")) {
+       userRef.child(snapshot.key).child("createdAt")
+           .set(firebase.database.ServerValue.TIMESTAMP);
+   }
 });
 
 userRef.orderByChild("createdAt").limitToLast(1).on('child_added', function (snapshot) {
