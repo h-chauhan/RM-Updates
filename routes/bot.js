@@ -18,16 +18,17 @@ router.post("/", connector.listen());
 const bot = new builder.UniversalBot(connector, function (session) {
     // store user's address
     const newUser = userRef.child(session.message.user.id);
+    var datetime = new Date();
     newUser.set({
-        address: session.message.address
+        address: session.message.address,
+        addedOn: datetime
     });
 
     // end current dialog
     session.endDialog('Hey there!');
 });
 
-// Every 5 seconds, check for new registered users and start a new dialog
-userRef.limitToLast(1).on('child_added', function (snapshot) {
+userRef.orderByChild("addedOn").limitToLast(1).on('child_added', function (snapshot) {
 
     // all records after the last continue to invoke this function
     const newUserID = snapshot.key;
