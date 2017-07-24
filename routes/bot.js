@@ -18,17 +18,16 @@ router.post("/", connector.listen());
 const bot = new builder.UniversalBot(connector, function (session) {
     // store user's address
     const newUser = userRef.child(session.message.user.id);
-    var datetime = new Date();
     newUser.set({
         address: session.message.address,
-        addedOn: datetime
+        createdAt: firebase.database.ServerValue.TIMESTAMP
     });
 
     // end current dialog
     session.endDialog('Hey there!');
 });
 
-userRef.orderByChild("addedOn").limitToLast(1).on('child_added', function (snapshot) {
+userRef.orderByChild("createdAt").limitToLast(1).on('child_added', function (snapshot) {
 
     // all records after the last continue to invoke this function
     const newUserID = snapshot.key;
