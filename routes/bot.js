@@ -1,16 +1,10 @@
+const builder = require('botbuilder');
 const express = require('express');
 const router = express.Router();
-const builder = require('botbuilder');
 const firebase = require('../config/firebaseConfig');
 const database = firebase.database();
 const userRef = database.ref('users/');
-
-
-// Create chat connector for communicating with the Bot Framework Service
-const connector = new builder.ChatConnector({
-    appId: process.env.MICROSOFT_APP_ID,
-    appPassword: process.env.MICROSOFT_APP_PASSWORD
-});
+const connector = require('../config/botConfig');
 
 router.post("/", connector.listen());
 
