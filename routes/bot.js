@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const builder = require('botbuilder');
-const firebase = require('firebase');
-firebase.initializeApp(require('../config/firebaseConfig'));
+const firebase = require('../config/firebaseConfig');
 const database = firebase.database();
 const userRef = database.ref('users/');
 
@@ -26,10 +25,10 @@ const bot = new builder.UniversalBot(connector, function (session) {
 });
 
 userRef.on('child_added', function (snapshot) {
-   if(!snapshot.hasChild("createdAt")) {
-       userRef.child(snapshot.key).child("createdAt")
-           .set(firebase.database.ServerValue.TIMESTAMP);
-   }
+    if (!snapshot.hasChild("createdAt")) {
+        userRef.child(snapshot.key).child("createdAt")
+            .set(firebase.database.ServerValue.TIMESTAMP);
+    }
 });
 
 userRef.orderByChild("createdAt").limitToLast(1).on('child_added', function (snapshot) {
@@ -58,8 +57,7 @@ bot.dialog('survey', [
     function (session, results) {
         userRef.child(session.message.user.id).child("name").set(results.response);
         builder.Prompts.choice(session,
-            'Hi ' + results.response + ', for which Resume Manager do you want updates? ',
-            ['Internship', 'Placement']);
+            'Hi ' + results.response + ', for which Resume Manager do you want updates? ', ['Internship', 'Placement']);
     },
     function (session, results) {
         userRef.child(session.message.user.id).child("updateType").set(results.response.entity);
