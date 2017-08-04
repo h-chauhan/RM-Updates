@@ -3,7 +3,9 @@ const express = require('express');
 const router = express.Router();
 const firebase = require('../config/firebaseConfig');
 const database = firebase.database();
+const newsRef = database.ref('news/');
 const userRef = database.ref('users/');
+let userSnap = null;
 const connector = require('../config/botConfig');
 
 router.post("/", connector.listen());
@@ -58,5 +60,34 @@ bot.dialog('survey', [
         session.endDialog('Got it... ');
     }
 ]);
+
+newsRef.on('child_added', function (snapshot) {
+    if (!snapshot.hasChild("createdAt")) {
+        newsRef.child(snapshot.key).child("createdAt")
+            .set(firebase.database.ServerValue.TIMESTAMP);
+    }
+});
+
+userRef.on('value', function (snapshot) {
+    userSnap = snapshot;
+});
+
+newsRef.orderByChild("createdAt").limitToLast(1).on('child_added', function (snapshot) {
+    if (userSnap !== null) {
+        userSnap.forEach(function (user) {
+            bot.send(new builder.Message()
+                .text("Notification Update:\n" +
+                    "---\n" +
+                    snapshot.val().date + " " + snapshot.val().time + "\n" +
+                    (snapshot.val().header !== undefined ? "---\n" +
+                        snapshot.val().header + "\n" : "") +
+                    (snapshot.val().body !== undefined ? "---\n" +
+                        snapshot.val().body.substr(0, 25) + "...\n" : "") +
+                    "---\n" +
+                    "Posted By: " + snapshot.val().poster)
+                .address(user.val().address));
+        });
+    }
+});
 
 module.exports = router;
