@@ -24,26 +24,21 @@ userRef.on('child_added', function (snapshot) {
     if (!snapshot.hasChild("createdAt")) {
         userRef.child(snapshot.key).child("createdAt")
             .set(firebase.database.ServerValue.TIMESTAMP);
+        const newUserID = snapshot.key;
+        console.log('Starting survey', newUserID);
+
+        const newConversationAddress = Object.assign({}, snapshot.val().address);
+
+        // start survey dialog
+        bot.beginDialog(newConversationAddress, 'survey', null, function (err) {
+            if (err) {
+                // error ocurred while starting new conversation. Channel not supported?
+                bot.send(new builder.Message()
+                    .text('This channel does not support this operation: ' + err.message)
+                    .address(newConversationAddress));
+            }
+        });
     }
-});
-
-userRef.orderByChild("createdAt").limitToLast(1).on('child_added', function (snapshot) {
-
-    // all records after the last continue to invoke this function
-    const newUserID = snapshot.key;
-    console.log('Starting survey', newUserID);
-
-    const newConversationAddress = Object.assign({}, snapshot.val().address);
-
-    // start survey dialog
-    bot.beginDialog(newConversationAddress, 'survey', null, function (err) {
-        if (err) {
-            // error ocurred while starting new conversation. Channel not supported?
-            bot.send(new builder.Message()
-                .text('This channel does not support this operation: ' + err.message)
-                .address(newConversationAddress));
-        }
-    });
 });
 
 bot.dialog('survey', [
@@ -65,30 +60,23 @@ newsRef.on('child_added', function (snapshot) {
     if (!snapshot.hasChild("createdAt")) {
         newsRef.child(snapshot.key).child("createdAt")
             .set(firebase.database.ServerValue.TIMESTAMP);
+        let notification = snapshot.val().notification;
+        if (userSnap !== null) {
+            userSnap.forEach(function (user) {
+                bot.send(new builder.Message()
+                    .text("Notification Update: " +
+                        notification.date + " " + notification.time + ". " +
+                        notification.header + ". " +
+                        notification.body.substr(0, 100) + "... " +
+                        "Posted By: " + notification.poster)
+                    .address(user.val().address));
+            });
+        }
     }
 });
 
 userRef.on('value', function (snapshot) {
     userSnap = snapshot;
-});
-
-newsRef.orderByChild("createdAt").limitToLast(1).on('child_added', function (snapshot) {
-    let notification = snapshot.val().notification;
-    if (userSnap !== null) {
-        userSnap.forEach(function (user) {
-            bot.send(new builder.Message()
-                .text("Notification Update:\n" +
-                    "---\n" +
-                    notification.date + " " + notification.time + "\n" +
-                    "---\n" +
-                    notification.header + "\n" +
-                    "---\n" +
-                    notification.body.substr(0, 100) + "...\n" +
-                    "---\n" +
-                    "Posted By: " + notification.poster)
-                .address(user.val().address));
-        });
-    }
 });
 
 module.exports = router;
