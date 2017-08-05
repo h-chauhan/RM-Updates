@@ -73,18 +73,19 @@ userRef.on('value', function (snapshot) {
 });
 
 newsRef.orderByChild("createdAt").limitToLast(1).on('child_added', function (snapshot) {
+    let notification = snapshot.val().notification;
     if (userSnap !== null) {
         userSnap.forEach(function (user) {
             bot.send(new builder.Message()
                 .text("Notification Update:\n" +
                     "---\n" +
-                    snapshot.val().date + " " + snapshot.val().time + "\n" +
-                    (snapshot.val().header !== undefined ? "---\n" +
-                        snapshot.val().header + "\n" : "") +
-                    (snapshot.val().body !== undefined ? "---\n" +
-                        snapshot.val().body.substr(0, 25) + "...\n" : "") +
+                    notification.date + " " + notification.time + "\n" +
                     "---\n" +
-                    "Posted By: " + snapshot.val().poster)
+                    notification.header + "\n" +
+                    "---\n" +
+                    notification.body.substr(0, 100) + "...\n" +
+                    "---\n" +
+                    "Posted By: " + notification.poster)
                 .address(user.val().address));
         });
     }
