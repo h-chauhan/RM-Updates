@@ -8,6 +8,7 @@ module.exports = {
     password: process.env.RM_LOGIN_PASSWORD,
     internLoginUrl: "http://tnp.dtu.ac.in/rm_2016-17/intern/intern_login",
     internNewsFeedUrl: "http://tnp.dtu.ac.in/rm_2016-17/intern/intern_student",
+    internJobsUrl: "http://tnp.dtu.ac.in/rm_2016-17/intern/intern_student/job_openings",
     internUsername: process.env.RM_INTERN_USERNAME,
     internPassword: process.env.RM_INTERN_PASSWORD
 };
