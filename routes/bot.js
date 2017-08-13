@@ -4,6 +4,9 @@ const router = express.Router();
 const firebase = require('../config/firebaseConfig');
 const database = firebase.database();
 const newsRef = database.ref('news/');
+const newsInternRef = database.ref('internNews/');
+const jobsRef = database.ref('jobs/');
+const internJobsRef = database.ref('internJobs/');
 const userRef = database.ref('users/');
 let userSnap = null;
 const connector = require('../config/botConfig');
@@ -19,6 +22,21 @@ const bot = new builder.UniversalBot(connector, function (session) {
     // end current dialog
     session.endDialog('Hey there!');
 });
+
+bot.dialog('survey', [
+    function (session) {
+        builder.Prompts.text(session, 'Hello... What\'s your name?');
+    },
+    function (session, results) {
+        userRef.child(session.message.user.id).child("name").set(results.response);
+        builder.Prompts.choice(session,
+            'Hi ' + results.response + ', for which Resume Manager do you want updates? ', ['Internship', 'Placement']);
+    },
+    function (session, results) {
+        userRef.child(session.message.user.id).child("updateType").set(results.response.entity);
+        session.endDialog('Got it... ');
+    }
+]);
 
 userRef.on('child_added', function (snapshot) {
     if (!snapshot.hasChild("createdAt")) {
@@ -41,21 +59,6 @@ userRef.on('child_added', function (snapshot) {
     }
 });
 
-bot.dialog('survey', [
-    function (session) {
-        builder.Prompts.text(session, 'Hello... What\'s your name?');
-    },
-    function (session, results) {
-        userRef.child(session.message.user.id).child("name").set(results.response);
-        builder.Prompts.choice(session,
-            'Hi ' + results.response + ', for which Resume Manager do you want updates? ', ['Internship', 'Placement']);
-    },
-    function (session, results) {
-        userRef.child(session.message.user.id).child("updateType").set(results.response.entity);
-        session.endDialog('Got it... ');
-    }
-]);
-
 newsRef.on('child_added', function (snapshot) {
     if (!snapshot.hasChild("createdAt")) {
         newsRef.child(snapshot.key).child("createdAt")
@@ -63,12 +66,73 @@ newsRef.on('child_added', function (snapshot) {
         let notification = snapshot.val().notification;
         if (userSnap !== null) {
             userSnap.forEach(function (user) {
+                if (user.val().updateType === "Placement")
                 bot.send(new builder.Message()
-                    .text("Notification Update: " +
-                        notification.date + " " + notification.time + ". " +
-                        notification.header + ". " +
-                        notification.body.substr(0, 100) + "... " +
+                    .text("Notification Update:\r\n" +
+                        notification.date + " " + notification.time + "\r\n" +
+                        notification.header + "\r\n" +
+                        notification.body.substr(0, 100) + "\r\n" +
                         "Posted By: " + notification.poster)
+                    .address(user.val().address));
+            });
+        }
+    }
+});
+
+newsInternRef.on('child_added', function (snapshot) {
+    if (!snapshot.hasChild("createdAt")) {
+        newsInternRef.child(snapshot.key).child("createdAt")
+            .set(firebase.database.ServerValue.TIMESTAMP);
+        let notification = snapshot.val().notification;
+        if (userSnap !== null) {
+            userSnap.forEach(function (user) {
+                if (user.val().updateType === "Internship")
+                bot.send(new builder.Message()
+                    .text("Notification Update:\r\n" +
+                        notification.date + " " + notification.time + "\r\n" +
+                        notification.header + "\r\n" +
+                        notification.body.substr(0, 100) + "\r\n" +
+                        "Posted By: " + notification.poster)
+                    .address(user.val().address));
+            });
+        }
+    }
+});
+
+jobsRef.on('child_added', function (snapshot) {
+    if (!snapshot.hasChild("createdAt")) {
+        jobsRef.child(snapshot.key).child("createdAt")
+            .set(firebase.database.ServerValue.TIMESTAMP);
+        let job = snapshot.val().job;
+        if (userSnap !== null) {
+            userSnap.forEach(function (user) {
+                if (user.val().updateType === "Placement")
+                bot.send(new builder.Message()
+                    .text("Job Opening Update:\r\n" +
+                        job.name + "\r\n" +
+                        "Application Deadline: " + job.appDeadline + "\r\n" +
+                        "Date of Visit: " + job.dateOfVisit + "\r\n" +
+                        "Apply: " + job.link)
+                    .address(user.val().address));
+            });
+        }
+    }
+});
+
+internJobsRef.on('child_added', function (snapshot) {
+    if (!snapshot.hasChild("createdAt")) {
+        internJobsRef.child(snapshot.key).child("createdAt")
+            .set(firebase.database.ServerValue.TIMESTAMP);
+        let job = snapshot.val().job;
+        if (userSnap !== null) {
+            userSnap.forEach(function (user) {
+                if (user.val().updateType === "Internship")
+                bot.send(new builder.Message()
+                    .text("Job Opening Update:\r\n" +
+                        job.name + "\r\n" +
+                        "Application Deadline: " + job.appDeadline + "\r\n" +
+                        "Date of Visit: " + job.dateOfVisit + "\r\n" +
+                        "Apply: " + job.link)
                     .address(user.val().address));
             });
         }
