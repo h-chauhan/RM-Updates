@@ -25,7 +25,9 @@ const bot = new builder.UniversalBot(connector, function (session) {
 
 bot.dialog('survey', [
     function (session) {
-        builder.Prompts.text(session, 'Hello... What\'s your name?');
+        session.send('Welcome to RM Updates. Please answer a few questions to subscribe to the service. ' +
+            'You can read the Privacy Policy here: http://dturmupdates.tk/PrivacyPolicy');
+        builder.Prompts.text(session, 'To start with... What\'s your name?');
     },
     function (session, results) {
         userRef.child(session.message.user.id).child("name").set(results.response);
@@ -67,13 +69,13 @@ newsRef.on('child_added', function (snapshot) {
         if (userSnap !== null) {
             userSnap.forEach(function (user) {
                 if (user.val().updateType === "Placement")
-                bot.send(new builder.Message()
-                    .text("Notification Update:\r\n" +
-                        notification.date + " " + notification.time + "\r\n" +
-                        notification.header + "\r\n" +
-                        notification.body.substr(0, 100) + "\r\n" +
-                        "Posted By: " + notification.poster)
-                    .address(user.val().address));
+                    bot.send(new builder.Message()
+                        .text("Notification Update:\r\n" +
+                            notification.date + " " + notification.time + "\r\n" +
+                            notification.header + "\r\n" +
+                            notification.body.substr(0, 100) + "\r\n" +
+                            "Posted By: " + notification.poster)
+                        .address(user.val().address));
             });
         }
     }
@@ -87,13 +89,13 @@ newsInternRef.on('child_added', function (snapshot) {
         if (userSnap !== null) {
             userSnap.forEach(function (user) {
                 if (user.val().updateType === "Internship")
-                bot.send(new builder.Message()
-                    .text("Notification Update:\r\n" +
-                        notification.date + " " + notification.time + "\r\n" +
-                        notification.header + "\r\n" +
-                        notification.body.substr(0, 100) + "\r\n" +
-                        "Posted By: " + notification.poster)
-                    .address(user.val().address));
+                    bot.send(new builder.Message()
+                        .text("Notification Update:\r\n" +
+                            notification.date + " " + notification.time + "\r\n" +
+                            notification.header + "\r\n" +
+                            notification.body.substr(0, 100) + "\r\n" +
+                            "Posted By: " + notification.poster)
+                        .address(user.val().address));
             });
         }
     }
@@ -107,13 +109,13 @@ jobsRef.on('child_added', function (snapshot) {
         if (userSnap !== null) {
             userSnap.forEach(function (user) {
                 if (user.val().updateType === "Placement")
-                bot.send(new builder.Message()
-                    .text("Job Opening Update:\r\n" +
-                        job.name + "\r\n" +
-                        "Application Deadline: " + job.appDeadline + "\r\n" +
-                        "Date of Visit: " + job.dateOfVisit + "\r\n" +
-                        "Apply: " + job.link)
-                    .address(user.val().address));
+                    bot.send(new builder.Message()
+                        .text("Job Opening Update:\r\n" +
+                            job.name + "\r\n" +
+                            "Application Deadline: " + job.appDeadline + "\r\n" +
+                            "Date of Visit: " + job.dateOfVisit + "\r\n" +
+                            "Apply: " + job.link)
+                        .address(user.val().address));
             });
         }
     }
@@ -127,13 +129,13 @@ internJobsRef.on('child_added', function (snapshot) {
         if (userSnap !== null) {
             userSnap.forEach(function (user) {
                 if (user.val().updateType === "Internship")
-                bot.send(new builder.Message()
-                    .text("Job Opening Update:\r\n" +
-                        job.name + "\r\n" +
-                        "Application Deadline: " + job.appDeadline + "\r\n" +
-                        "Date of Visit: " + job.dateOfVisit + "\r\n" +
-                        "Apply: " + job.link)
-                    .address(user.val().address));
+                    bot.send(new builder.Message()
+                        .text("Job Opening Update:\r\n" +
+                            job.name + "\r\n" +
+                            "Application Deadline: " + job.appDeadline + "\r\n" +
+                            "Date of Visit: " + job.dateOfVisit + "\r\n" +
+                            "Apply: " + job.link)
+                        .address(user.val().address));
             });
         }
     }
