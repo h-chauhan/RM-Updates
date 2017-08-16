@@ -3,5 +3,5 @@ module.exports = {
 	// TODO update them to right values
 	pullRMSchedule: "0 */1 2-17 * * *",
 	pullRMJobsSchedule: "0 */5 2-17 * * *",
-	pingMyselfSchedule: "0 */15 * * * *"
+	pingMyselfSchedule: "0 */5 * * * *"
 };
