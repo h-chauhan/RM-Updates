@@ -1,7 +1,7 @@
 module.exports = {
 	// CRON fields : sec min hour day month day
 	// TODO update them to right values
-	pullRMSchedule: "*/10 * * * * *",
-	pullRMJobsSchedule: "*/10 * * * * *",
+	pullRMSchedule: "0 */1 7-17 * * *",
+	pullRMJobsSchedule: "0 */5 7-17 * * *",
 	pingMyselfSchedule: "0 */15 * * * *"
 };
