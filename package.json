@@ -19,6 +19,7 @@
     "jade": "~1.11.0",
     "morgan": "~1.8.1",
     "promise": "^8.0.1",
+    "request": "^2.81.0",
     "restify": "^5.0.1",
     "serve-favicon": "~2.4.2",
     "zombie": "^5.0.7"

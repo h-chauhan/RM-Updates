@@ -1,12 +1,8 @@
 require('dotenv').config();
 
 module.exports = {
-    loginUrl: "http://tnp.dtu.ac.in/rm_2016-17/login",
-    newsFeedUrl: "http://tnp.dtu.ac.in/rm_2016-17/student",
-    username: process.env.RM_LOGIN_USERNAME,
-    password: process.env.RM_LOGIN_PASSWORD,
-    internLoginUrl: "http://tnp.dtu.ac.in/rm_2016-17/intern/intern_login",
-    internNewsFeedUrl: "http://tnp.dtu.ac.in/rm_2016-17/intern/intern_student",
-    internUsername: process.env.RM_INTERN_USERNAME,
-    internPassword: process.env.RM_INTERN_PASSWORD
+    newsFeedUrl: "http://rmbot-service.herokuapp.com/api/notifs/",
+    jobsUrl: "http://rmbot-service.herokuapp.com/api/jobs/",
+    internNewsFeedUrl: "http://rmbot-service.herokuapp.com/api/internnotifs/",
+    internJobsUrl: "http://rmbot-service.herokuapp.com/api/internjobs/",
 };
