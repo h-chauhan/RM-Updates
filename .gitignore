@@ -55,3 +55,4 @@ jspm_packages
 
 # ENV Variable
 .env
+_config.yml
