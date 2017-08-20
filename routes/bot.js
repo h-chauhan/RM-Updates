@@ -55,7 +55,12 @@ userRef.on('child_added', function (snapshot) {
                 // error ocurred while starting new conversation. Channel not supported?
                 bot.send(new builder.Message()
                     .text('This channel does not support this operation: ' + err.message)
-                    .address(newConversationAddress));
+                    .address(newConversationAddress)
+                    .sourceEvent({
+                        facebook: {
+                            notification_type: "REGULAR"
+                        }
+                    }));
             }
         });
     }
@@ -75,7 +80,12 @@ newsRef.on('child_added', function (snapshot) {
                             notification.header + "\r\n" +
                             notification.body.substr(0, 100) + "\r\n" +
                             "Posted By: " + notification.poster)
-                        .address(user.val().address));
+                        .address(user.val().address)
+                        .sourceEvent({
+                            facebook: {
+                                notification_type: "REGULAR"
+                            }
+                        }));
             });
         }
     }
@@ -95,7 +105,12 @@ newsInternRef.on('child_added', function (snapshot) {
                             notification.header + "\r\n" +
                             notification.body.substr(0, 100) + "\r\n" +
                             "Posted By: " + notification.poster)
-                        .address(user.val().address));
+                        .address(user.val().address)
+                        .sourceEvent({
+                            facebook: {
+                                notification_type: "REGULAR"
+                            }
+                        }));
             });
         }
     }
@@ -115,7 +130,12 @@ jobsRef.on('child_added', function (snapshot) {
                             "Application Deadline: " + job.appDeadline + "\r\n" +
                             "Date of Visit: " + job.dateOfVisit + "\r\n" +
                             "Apply: " + job.link)
-                        .address(user.val().address));
+                        .address(user.val().address)
+                        .sourceEvent({
+                            facebook: {
+                                notification_type: "REGULAR"
+                            }
+                        }));
             });
         }
     }
@@ -135,7 +155,12 @@ internJobsRef.on('child_added', function (snapshot) {
                             "Application Deadline: " + job.appDeadline + "\r\n" +
                             "Date of Visit: " + job.dateOfVisit + "\r\n" +
                             "Apply: " + job.link)
-                        .address(user.val().address));
+                        .address(user.val().address)
+                        .sourceEvent({
+                            facebook: {
+                                notification_type: "REGULAR"
+                            }
+                        }));
             });
         }
     }
