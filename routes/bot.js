@@ -78,7 +78,7 @@ newsRef.on('child_added', function (snapshot) {
                         .text("Notification Update:\r\n" +
                             notification.date + " " + notification.time + "\r\n" +
                             notification.header + "\r\n" +
-                            notification.body.substr(0, 100) + "\r\n" +
+                            notification.body.substr(0, 500) + "\r\n" +
                             "Posted By: " + notification.poster)
                         .address(user.val().address)
                         .sourceEvent({
@@ -103,7 +103,7 @@ newsInternRef.on('child_added', function (snapshot) {
                         .text("Notification Update:\r\n" +
                             notification.date + " " + notification.time + "\r\n" +
                             notification.header + "\r\n" +
-                            notification.body.substr(0, 100) + "\r\n" +
+                            notification.body.substr(0, 500) + "\r\n" +
                             "Posted By: " + notification.poster)
                         .address(user.val().address)
                         .sourceEvent({
