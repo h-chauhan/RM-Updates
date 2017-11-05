@@ -26,7 +26,7 @@ const bot = new builder.UniversalBot(connector, function (session) {
 bot.dialog('survey', [
     function (session) {
         session.send('Welcome to RM Updates. Please answer a few questions to subscribe to the service. ' +
-            'You can read the Privacy Policy here: http://dturmupdates.tk/PrivacyPolicy.html');
+            'You can read the Privacy Policy here: http://dturmupdates.me/PrivacyPolicy.html');
         builder.Prompts.text(session, 'To start with... What\'s your name?');
     },
     function (session, results) {
