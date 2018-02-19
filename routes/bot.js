@@ -75,10 +75,10 @@ newsRef.on('child_added', function (snapshot) {
             userSnap.forEach(function (user) {
                 if (user.val().updateType === "Placement")
                     bot.send(new builder.Message()
-                        .text("Notification Update:\r\n" +
-                            notification.date + " " + notification.time + "\r\n" +
-                            notification.header + "\r\n" +
-                            notification.body.substr(0, 500) + "\r\n" +
+                        .text("Notification Update:\n\n" +
+                            notification.date + " " + notification.time + "\n\n" +
+                            notification.header + "\n\n" +
+                            notification.body + "\n\n" +
                             "Posted By: " + notification.poster)
                         .address(user.val().address)
                         .sourceEvent({
@@ -100,10 +100,10 @@ newsInternRef.on('child_added', function (snapshot) {
             userSnap.forEach(function (user) {
                 if (user.val().updateType === "Internship")
                     bot.send(new builder.Message()
-                        .text("Notification Update:\r\n" +
-                            notification.date + " " + notification.time + "\r\n" +
-                            notification.header + "\r\n" +
-                            notification.body.substr(0, 500) + "\r\n" +
+                        .text("Notification Update:\n\n" +
+                            notification.date + " " + notification.time + "\n\n" +
+                            notification.header + "\n\n" +
+                            notification.body + "\n\n" +
                             "Posted By: " + notification.poster)
                         .address(user.val().address)
                         .sourceEvent({
@@ -125,10 +125,10 @@ jobsRef.on('child_added', function (snapshot) {
             userSnap.forEach(function (user) {
                 if (user.val().updateType === "Placement")
                     bot.send(new builder.Message()
-                        .text("Job Opening Update:\r\n" +
-                            job.name + "\r\n" +
-                            "Application Deadline: " + job.appDeadline + "\r\n" +
-                            "Date of Visit: " + job.dateOfVisit + "\r\n" +
+                        .text("Job Opening Update:\n\n" +
+                            job.name + "\n\n" +
+                            "Application Deadline: " + job.appDeadline + "\n\n" +
+                            "Date of Visit: " + job.dateOfVisit + "\n\n" +
                             "Apply: " + job.link)
                         .address(user.val().address)
                         .sourceEvent({
@@ -150,10 +150,10 @@ internJobsRef.on('child_added', function (snapshot) {
             userSnap.forEach(function (user) {
                 if (user.val().updateType === "Internship")
                     bot.send(new builder.Message()
-                        .text("Job Opening Update:\r\n" +
-                            job.name + "\r\n" +
-                            "Application Deadline: " + job.appDeadline + "\r\n" +
-                            "Date of Visit: " + job.dateOfVisit + "\r\n" +
+                        .text("Job Opening Update:\n\n" +
+                            job.name + "\n\n" +
+                            "Application Deadline: " + job.appDeadline + "\n\n" +
+                            "Date of Visit: " + job.dateOfVisit + "\n\n" +
                             "Apply: " + job.link)
                         .address(user.val().address)
                         .sourceEvent({
