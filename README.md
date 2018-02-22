@@ -12,7 +12,7 @@ Get updates as they appear on [Resume Manager](http://tnp.dtu.ac.in/rm_2016-17/)
 Read the [privacy policy](PrivacyPolicy). 
 
 ## Services used:
-1. Amazon Web Services
+1. Digital Ocean
 2. Microsoft Bot Framework
 3. Firebase Realtime-Database
 4. Facebook Messenger Platform
