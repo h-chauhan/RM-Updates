@@ -20,23 +20,23 @@ const bot = new builder.UniversalBot(connector, function (session) {
     newUser.child("address").set(session.message.address);
 
     // end current dialog
-    session.endDialog('Hey there!');
+    session.endDialog();
 });
 
 bot.dialog('survey', [
     function (session) {
         session.send('Welcome to RM Updates. Please answer a few questions to subscribe to the service. ' +
             'You can read the Privacy Policy here: http://dturmupdates.me/PrivacyPolicy.html');
-        builder.Prompts.text(session, 'To start with... What\'s your name?');
-    },
-    function (session, results) {
-        userRef.child(session.message.user.id).child("name").set(results.response);
+        userRef.child(session.message.user.id).child("name").set(session.message.user.name);
         builder.Prompts.choice(session,
-            'Hi ' + results.response + ', for which Resume Manager do you want updates? ', ['Internship', 'Placement']);
+            session.message.user.name + ', for which Resume Manager do you want updates? ', ['Internship', 'Placement']);
     },
     function (session, results) {
         userRef.child(session.message.user.id).child("updateType").set(results.response.entity);
-        session.endDialog('Got it... ');
+        userRef.child(results.response.entity).child(session.message.user.id)
+            .set(userSnap.child(session.message.user.id).val());
+        userSnap.child(session.message.user.id).remove();
+        session.endDialog('You are now subscribed to ' + results.response.entity + ' RM Updates.');
     }
 ]);
 
