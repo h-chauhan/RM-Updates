@@ -25,3 +25,6 @@ Built with :heart: and Node.JS
 1. Notifications: 1 minute
 2. Job Openings: 5 minutes
 
+---
+
+Special thanks to [@arjunrajpal](github.com/arjunrajpal) for the web scraping python script.
