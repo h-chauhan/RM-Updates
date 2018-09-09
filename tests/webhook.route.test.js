@@ -26,7 +26,12 @@ describe('Webhook tests', function () {
                 "object": "page",
                 "entry": [{
                     "messaging": [{
-                        "message": "TEST_MESSAGE"
+                        sender: {
+                            id: process.env.TEST_RECIPIENT_ID
+                        },
+                        message: {
+                            text: "Congratulations! Your tests worked!!!"
+                        }
                     }]
                 }]
             })

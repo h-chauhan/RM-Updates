@@ -8,20 +8,27 @@ describe("Messenger", function () {
         id = process.env.TEST_RECIPIENT_ID;
         msg = "Congratulations! Your tests worked!!!";
         url = "http://dturmupdates.me";
-        btn_title = "Open DTU RM Updates"
+        btn_title = "Open DTU RM Updates";
         done();
     });
 
-    it('sendTxtMessage should return response with msg id;', function (done) {
+    it('sendTxtMessage should return response with msg id', function (done) {
         messenger.sendTxtMessage(id, msg).then((result) => {
             expect(result.message_id).to.exist;
             done();
         });
     });
 
-    it('sendUrlMessage should return response with msg id;', function (done) {
+    it('sendUrlMessage should return response with msg id', function (done) {
         messenger.sendUrlMessage(id, msg, url, btn_title).then((result) => {
             expect(result.message_id).to.exist;
+            done();
+        });
+    });
+
+    it('getSendersName should return name', function (done) {
+        messenger.getSenderName(id).then((result) => {
+            expect(result).to.exist;
             done();
         });
     });

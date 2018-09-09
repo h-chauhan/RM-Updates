@@ -1,15 +1,11 @@
-const admin = require('firebase-admin');
-
-var serviceAccount = require('./service.json');
-
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-});
-
-var db = admin.firestore();
-const settings = {
-    timestampsInSnapshots: true
+firebaseConfig = {
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET
 };
-db.settings(settings);
 
-module.exports = db;
+const firebase = require('firebase');
+firebase.initializeApp(firebaseConfig);
+
+module.exports = firebase;
