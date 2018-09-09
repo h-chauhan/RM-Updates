@@ -23,6 +23,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/webhook', webhookRouter);
 
+//Start CRON jobs
+require('./libs/tasks').scheduleJobs();
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
