@@ -5,7 +5,7 @@ import logger from 'morgan';
 import messengerRouter from './routes/messenger';
 import webhookRouter from './routes/webhook';
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(json());

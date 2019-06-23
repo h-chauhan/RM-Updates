@@ -5,7 +5,6 @@ import {
 
 const router = Router();
 
-/* GET users listing. */
 router.get('/', async (req, res) => {
   try {
     console.log('Request: ', JSON.stringify(req.query));
