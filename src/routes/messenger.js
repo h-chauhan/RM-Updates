@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import {
-  getSenderName, sendMessage, sendMessageWithUrlButtons, sendMessageWithQuickReplies,
+  getSenderName, sendMessage, sendMessageWithButtons, sendMessageWithQuickReplies,
 } from '../controllers/messenger';
 
 const router = Router();
@@ -21,11 +21,11 @@ router.post('/', async (req, res) => {
   try {
     console.log('Request: ', JSON.stringify(req.body));
     const {
-      recipients, textMessage, urlButtons, quickReplies,
+      recipients, textMessage, buttons, quickReplies,
     } = req.body;
     recipients.forEach(async (recipient) => {
-      if (urlButtons) {
-        res.send(await sendMessageWithUrlButtons(recipient, textMessage, urlButtons));
+      if (buttons) {
+        res.send(await sendMessageWithButtons(recipient, textMessage, buttons));
       } else if (quickReplies) {
         res.send(await sendMessageWithQuickReplies(recipient, textMessage, quickReplies));
       } else {

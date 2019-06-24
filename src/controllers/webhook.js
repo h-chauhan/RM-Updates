@@ -23,6 +23,7 @@ export default async function controller(event) {
       senderId,
       'Welcome to DTU RM Updates. You can read the Privacy Policy here: dturmupdates.me/PrivacyPolicy.html',
       [{
+        type: 'web_url',
         title: 'Privacy Policy',
         url: 'dturmupdates.me/PrivacyPolicy.html',
       }],
@@ -30,13 +31,29 @@ export default async function controller(event) {
     sendMessageWithQuickReplies(
       senderId,
       'For which Resume Manager, do you want to subscribe?\n\nInternship or Placement',
-      ['Internship', 'Placement'],
+      [{
+        type: 'postback',
+        title: 'Internship',
+        payload: 'SUBSCRIBE_INTERNSHIP',
+      }, {
+        type: 'postback',
+        title: 'Placement',
+        payload: 'SUBSCRIBE_PLACEMENT',
+      }],
     );
   } else if (!subscriber.data().subscription_type) {
     sendMessageWithQuickReplies(
       senderId,
       'For which Resume Manager, do you want to subscribe?\n\nInternship or Placement',
-      ['Internship', 'Placement'],
+      [{
+        type: 'postback',
+        title: 'Internship',
+        payload: 'SUBSCRIBE_INTERNSHIP',
+      }, {
+        type: 'postback',
+        title: 'Placement',
+        payload: 'SUBSCRIBE_PLACEMENT',
+      }],
     );
   } else {
     console.log(`SUBSCRIBER ${senderId} ALREADY EXISTS`);

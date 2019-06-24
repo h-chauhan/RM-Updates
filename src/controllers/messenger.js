@@ -16,7 +16,7 @@ export const sendMessage = async (recpId, textMessage) => (await Axios.post(MESS
   },
 })).data;
 
-export const sendMessageWithUrlButtons = async (recpId, textMessage, buttons) => {
+export const sendMessageWithButtons = async (recpId, textMessage, buttons) => {
   const { data } = await Axios.post(MESSENGER_API, {
     recipient: { id: recpId },
     message: {
@@ -25,11 +25,7 @@ export const sendMessageWithUrlButtons = async (recpId, textMessage, buttons) =>
         payload: {
           template_type: 'button',
           text: textMessage,
-          buttons: buttons.map(({ url, title }) => ({
-            type: 'web_url',
-            url,
-            title,
-          })),
+          buttons,
         },
       },
     },
