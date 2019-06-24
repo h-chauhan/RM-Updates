@@ -1,6 +1,6 @@
 import Firestore from '@google-cloud/firestore';
 import {
-  getSenderName, sendMessageWithUrlButtons, sendMessageWithQuickReplies,
+  getSenderName, sendMessageWithButtons,
 } from './messenger';
 
 const DB = new Firestore({
@@ -19,7 +19,7 @@ export default async function controller(event) {
       name: senderName,
     });
     console.log(`SUBSCRIBER ${senderId} ADDED TO DB`);
-    sendMessageWithUrlButtons(
+    sendMessageWithButtons(
       senderId,
       'Welcome to DTU RM Updates. You can read the Privacy Policy here: dturmupdates.me/PrivacyPolicy.html',
       [{
@@ -28,7 +28,7 @@ export default async function controller(event) {
         url: 'dturmupdates.me/PrivacyPolicy.html',
       }],
     );
-    sendMessageWithQuickReplies(
+    sendMessageWithButtons(
       senderId,
       'For which Resume Manager, do you want to subscribe?\n\nInternship or Placement',
       [{
@@ -42,7 +42,7 @@ export default async function controller(event) {
       }],
     );
   } else if (!subscriber.data().subscription_type) {
-    sendMessageWithQuickReplies(
+    sendMessageWithButtons(
       senderId,
       'For which Resume Manager, do you want to subscribe?\n\nInternship or Placement',
       [{
