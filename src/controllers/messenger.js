@@ -37,8 +37,8 @@ export const sendMessageWithUrlButtons = async (recpId, textMessage, buttons) =>
   return data;
 };
 
-export const sendMessageWithQuickReplies = (recpId, textMessage, quickReplies) => {
-  Axios.post(MESSENGER_API, {
+export const sendMessageWithQuickReplies = async (recpId, textMessage, quickReplies) => {
+  const { data } = await Axios.post(MESSENGER_API, {
     recipient: { id: recpId },
     message: {
       text: textMessage,
@@ -49,4 +49,5 @@ export const sendMessageWithQuickReplies = (recpId, textMessage, quickReplies) =
       })),
     },
   });
+  return data;
 };

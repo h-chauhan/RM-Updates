@@ -6,10 +6,7 @@
 import '@babel/polyfill';
 import { createServer } from 'http';
 import Debug from 'debug';
-import { config as DotEnvConfig } from 'dotenv';
 import app from '../app';
-
-DotEnvConfig();
 
 const debug = Debug('rm-updates:server');
 
