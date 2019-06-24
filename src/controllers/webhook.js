@@ -5,6 +5,7 @@ import {
 
 const DB = new Firestore({
   projectId: 'dtu-rm-updates-241012',
+  keyFilename: process.env.STAGE !== 'dev' && 'GOOGLE_CLOUD_CREDENTIALS.json',
 });
 
 export default async function controller(event) {

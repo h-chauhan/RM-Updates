@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const PAGE_ACCESS_TOKEN = 'EAAEXHEZCeTGwBACuLZCEwpJwZBtuPTgADhYV5PqRPKd6dufyRShUTRojiQjbroEbNezi6NE8fQ5fXvxt7mHdZBMtwipwjd15TlmHoUVd83ZBzolemdeyeVwczTQN4XR4nYb2t9WBY7GaIVt4sZCgXDVdGHNtlTOKNxEV3vCrgwcQZDZD';
+const { PAGE_ACCESS_TOKEN } = process.env;
 const GRAPH_API = userId => `https://graph.facebook.com/${userId}?fields=name&access_token=${PAGE_ACCESS_TOKEN}`;
 const MESSENGER_API = `https://graph.facebook.com/v3.3/me/messages?access_token=${PAGE_ACCESS_TOKEN}`;
 
