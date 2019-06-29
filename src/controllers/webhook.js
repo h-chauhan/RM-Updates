@@ -46,7 +46,7 @@ export default async function controller(event) {
     const payload = _.get(event, 'postback.payload');
     if (payload === 'SUBSCRIBE_INTERNSHIP' || payload === 'SUBSCRIBE_PLACEMENT') {
       subscriberRef.set({
-        type: payload === 'SUBSCRIBE_INTERNSHIP' ? 'internship' : 'placement',
+        subscription_type: payload === 'SUBSCRIBE_INTERNSHIP' ? 'internship' : 'placement',
       }, { merge: true });
       sendMessage(senderId, 'Thank you! You have been successfully subscribed. Stay tuned for updates.');
     } else {
