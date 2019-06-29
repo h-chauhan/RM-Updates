@@ -1,6 +1,7 @@
 import Firestore from '@google-cloud/firestore';
+import _ from 'lodash';
 import {
-  getSenderName, sendMessageWithButtons,
+  getSenderName, sendMessageWithButtons, sendMessage,
 } from './messenger';
 
 const DB = new Firestore({
@@ -19,7 +20,7 @@ export default async function controller(event) {
       name: senderName,
     });
     console.log(`SUBSCRIBER ${senderId} ADDED TO DB`);
-    sendMessageWithButtons(
+    await sendMessageWithButtons(
       senderId,
       'Welcome to DTU RM Updates. You can read the Privacy Policy here: dturmupdates.me/PrivacyPolicy.html',
       [{
@@ -30,7 +31,7 @@ export default async function controller(event) {
     );
     sendMessageWithButtons(
       senderId,
-      'For which Resume Manager, do you want to subscribe?\n\nInternship or Placement',
+      'For which Resume Manager, do you want to subscribe?\n\nInternship or Placement?',
       [{
         type: 'postback',
         title: 'Internship',
@@ -42,20 +43,29 @@ export default async function controller(event) {
       }],
     );
   } else if (!subscriber.data().subscription_type) {
-    sendMessageWithButtons(
-      senderId,
-      'For which Resume Manager, do you want to subscribe?\n\nInternship or Placement',
-      [{
-        type: 'postback',
-        title: 'Internship',
-        payload: 'SUBSCRIBE_INTERNSHIP',
-      }, {
-        type: 'postback',
-        title: 'Placement',
-        payload: 'SUBSCRIBE_PLACEMENT',
-      }],
-    );
+    const payload = _.get(event, 'postback.payload');
+    if (payload === 'SUBSCRIBE_INTERNSHIP' || payload === 'SUBSCRIBE_PLACEMENT') {
+      subscriberRef.set({
+        type: payload === 'SUBSCRIBE_INTERNSHIP' ? 'internship' : 'placement',
+      }, { merge: true });
+      sendMessage(senderId, 'Thank you! You have been successfully subscribed. Stay tuned for updates.');
+    } else {
+      sendMessageWithButtons(
+        senderId,
+        'For which Resume Manager, do you want to subscribe?\n\nInternship or Placement?',
+        [{
+          type: 'postback',
+          title: 'Internship',
+          payload: 'SUBSCRIBE_INTERNSHIP',
+        }, {
+          type: 'postback',
+          title: 'Placement',
+          payload: 'SUBSCRIBE_PLACEMENT',
+        }],
+      );
+    }
   } else {
     console.log(`SUBSCRIBER ${senderId} ALREADY EXISTS`);
+    sendMessage(senderId, 'Hey! Stay tuned for updates. If you have any query, we will connect you with someone real soon.');
   }
 }
