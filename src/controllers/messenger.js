@@ -9,14 +9,14 @@ export const getSenderName = async (userId) => {
   return response.data;
 };
 
-export const sendMessage = async (recpId, textMessage) => (await Axios.post(MESSENGER_API, {
+export const sendMessage = async (recpId, { textMessage }) => (await Axios.post(MESSENGER_API, {
   recipient: { id: recpId },
   message: {
     text: textMessage,
   },
 })).data;
 
-export const sendMessageWithButtons = async (recpId, textMessage, buttons) => {
+export const sendMessageWithButtons = async (recpId, { textMessage, buttons }) => {
   const { data } = await Axios.post(MESSENGER_API, {
     recipient: { id: recpId },
     message: {
@@ -33,7 +33,7 @@ export const sendMessageWithButtons = async (recpId, textMessage, buttons) => {
   return data;
 };
 
-export const sendMessageWithQuickReplies = async (recpId, textMessage, quickReplies) => {
+export const sendMessageWithQuickReplies = async (recpId, { textMessage, quickReplies }) => {
   const { data } = await Axios.post(MESSENGER_API, {
     recipient: { id: recpId },
     message: {

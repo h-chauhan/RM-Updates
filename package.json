@@ -6,7 +6,8 @@
     "build": "babel ./src/ -d dist",
     "start": "node -r dotenv/config ./dist/bin/www",
     "prestart": "npm run build",
-    "dev": "nodemon --watch src --exec npm start"
+    "dev": "nodemon --watch src --exec npm start",
+    "lint": "eslint . --fix"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
@@ -25,8 +26,9 @@
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.3",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
     "nodemon": "^1.19.1"
   }
 }

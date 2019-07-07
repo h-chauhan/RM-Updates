@@ -1,7 +1,11 @@
 import { Router } from 'express';
 import {
-  getSenderName, sendMessage, sendMessageWithButtons, sendMessageWithQuickReplies,
+  getSenderName,
+  sendMessage,
+  sendMessageWithButtons,
+  sendMessageWithQuickReplies,
 } from '../controllers/messenger';
+import labelToRecipientsMapper from '../utils/labelToRecipientsMapper';
 
 const router = Router();
 
@@ -21,20 +25,28 @@ router.post('/', async (req, res) => {
   try {
     console.log('Request: ', JSON.stringify(req.body));
     const {
-      recipients, textMessage, buttons, quickReplies,
+      label, textMessage, buttons, quickReplies,
     } = req.body;
-    recipients.forEach(async (recipient) => {
-      if (buttons) {
-        res.send(await sendMessageWithButtons(recipient, textMessage, buttons));
-      } else if (quickReplies) {
-        res.send(await sendMessageWithQuickReplies(recipient, textMessage, quickReplies));
-      } else {
-        res.send(await sendMessage(recipient, textMessage));
-      }
-      console.log('MESSAGE SENT SUCCESSFULLY');
-    });
+    let { recipients } = req.body;
+    if (label) {
+      recipients = await labelToRecipientsMapper(label);
+    }
+    if (recipients && recipients.length) {
+      recipients.forEach(async (recipient) => {
+        if (buttons) {
+          res.send(await sendMessageWithButtons(recipient, { textMessage, buttons }));
+        } else if (quickReplies) {
+          res.send(await sendMessageWithQuickReplies(recipient, { textMessage, quickReplies }));
+        } else {
+          res.send(await sendMessage(recipient, { textMessage }));
+        }
+        console.log('MESSAGE SENT SUCCESSFULLY');
+      });
+    } else {
+      res.status(400).send({ error: 'no recipients found.' });
+    }
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(500).send({ error: e.message });
   }
 });
 
