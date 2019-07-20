@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "build": "babel ./src/ -d dist",
-    "start": "node -r dotenv/config ./dist/bin/www",
-    "prestart": "npm run build",
-    "dev": "nodemon --watch src --exec npm start",
+    "pack": "webpack -p",
+    "serve": "node -r dotenv/config ./dist/bin/www",
+    "start": "npm-run-all build pack serve",
+    "pack:dev": "webpack -d",
+    "dev": "nodemon --watch src --exec npm-run-all build pack:dev serve",
+    "run:prod": "pm2 start dist/bin/www.js --node-args='-r dotenv/config'",
     "lint": "eslint . --fix"
   },
   "dependencies": {
@@ -19,16 +22,26 @@
     "express": "~4.16.1",
     "lodash": "^4.17.11",
     "morgan": "~1.9.1",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "order-id": "^1.1.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.0",
-    "nodemon": "^1.19.1"
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.2",
+    "nodemon": "^1.19.1",
+    "webpack": "^4.35.2",
+    "webpack-cli": "^3.3.5"
   }
 }

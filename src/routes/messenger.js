@@ -5,7 +5,7 @@ import {
   sendMessageWithButtons,
   sendMessageWithQuickReplies,
 } from '../controllers/messenger';
-import labelToRecipientsMapper from '../utils/labelToRecipientsMapper';
+import labelToRecipientsMapper from '../utils/label-to-recipients-mapper';
 
 const router = Router();
 

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {
   getSenderName, sendMessageWithButtons, sendMessage,
 } from './messenger';
-import MessageTemplates from '../utils/messageTemplates';
+import MessageTemplates from '../utils/message-templates';
 
 const DB = new Firestore({
   projectId: 'dtu-rm-updates-241012',
