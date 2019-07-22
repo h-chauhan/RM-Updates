@@ -32,7 +32,7 @@ export default async function controller(event) {
         subscription_type: payload === 'SUBSCRIBE_INTERNSHIP' ? 'internship' : 'placement',
       }, { merge: true });
       sendMessage(senderId, MessageTemplates.SAVE_SUBSCRIPTION);
-    } else if (message.toLowerCase() === 'placement || message.toLowerCase() === 'internship') {
+    } else if (message.toLowerCase() === 'placement' || message.toLowerCase() === 'internship') {
 // Save the subscription.
       subscriberRef.set({
         subscription_type: message.toLowerCase(),
