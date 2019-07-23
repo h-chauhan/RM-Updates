@@ -25,17 +25,17 @@ export default async function controller(event) {
   } else if (!subscriber.data().subscription_type) {
     // The user has not subscribed.
     const payload = _.get(event, 'postback.payload');
-    const { message } = event;
+    const { message: { text: textMessage } } = event;
     if (payload === 'SUBSCRIBE_INTERNSHIP' || payload === 'SUBSCRIBE_PLACEMENT') {
       // Save the subscription.
       subscriberRef.set({
         subscription_type: payload === 'SUBSCRIBE_INTERNSHIP' ? 'internship' : 'placement',
       }, { merge: true });
       sendMessage(senderId, MessageTemplates.SAVE_SUBSCRIPTION);
-    } else if (message.toLowerCase() === 'placement' || message.toLowerCase() === 'internship') {
-// Save the subscription.
+    } else if (textMessage.toLowerCase() === 'placement' || textMessage.toLowerCase() === 'internship') {
+      // Save the subscription.
       subscriberRef.set({
-        subscription_type: message.toLowerCase(),
+        subscription_type: textMessage.toLowerCase(),
       }, { merge: true });
       sendMessage(senderId, MessageTemplates.SAVE_SUBSCRIPTION);
 }
