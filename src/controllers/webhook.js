@@ -25,7 +25,7 @@ export default async function controller(event) {
   } else if (!subscriber.data().subscription_type) {
     // The user has not subscribed.
     const payload = _.get(event, 'postback.payload');
-    const { message: { text: textMessage } } = event;
+    const textMessage = _.get(event, 'message.text');
     if (payload === 'SUBSCRIBE_INTERNSHIP' || payload === 'SUBSCRIBE_PLACEMENT') {
       // Save the subscription.
       subscriberRef.set({
