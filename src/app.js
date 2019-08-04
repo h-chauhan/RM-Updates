@@ -5,6 +5,7 @@ import logger from 'morgan';
 import messengerRouter from './routes/messenger';
 import webhookRouter from './routes/webhook';
 import paymentsRouter from './routes/payments';
+import reactRouter from './routes/react-render';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.static('public'));
 
 app.use('/messenger', messengerRouter);
 app.use('/webhook', webhookRouter);
-app.use('/pay', paymentsRouter);
+app.use('/verify-payment', paymentsRouter);
+app.use('/*', reactRouter);
 
 export default app;

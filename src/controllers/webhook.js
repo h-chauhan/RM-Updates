@@ -38,8 +38,7 @@ export default async function controller(event) {
         subscription_type: textMessage.toLowerCase(),
       }, { merge: true });
       sendMessage(senderId, MessageTemplates.SAVE_SUBSCRIPTION);
-}
-else {
+    } else {
       // Ask again to subscribe.
       sendMessageWithButtons(senderId, MessageTemplates.ASK_SUBSCRIBE);
     }

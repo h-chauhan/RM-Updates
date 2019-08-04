@@ -10,11 +10,6 @@ import paytmConfigs from '../configs/paytm';
 
 const router = new Router();
 
-router.get('/', async (req, res) => {
-  const reactDOM = renderToString(<App />);
-  res.send(templateHTML(reactDOM));
-});
-
 router.post('/', async (req, res) => {
   let paytmChecksum;
   const paytmParams = {};
