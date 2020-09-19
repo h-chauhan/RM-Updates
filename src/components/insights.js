@@ -1,17 +1,17 @@
 import React from 'react';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+// import firebase from 'firebase/app';
+// import 'firebase/firestore';
 import { RadialChart } from 'react-vis';
 
-firebase.initializeApp({
-  apiKey: 'AIzaSyCyMifCI1xfAyHlBajsyCOhSTx7A1zPOMk',
-  authDomain: 'dtu-rm-updates-241012.firebaseapp.com',
-  databaseURL: 'https://dtu-rm-updates-241012.firebaseio.com',
-  projectId: 'dtu-rm-updates-241012',
-  storageBucket: 'dtu-rm-updates-241012.appspot.com',
-  messagingSenderId: '917195639751',
-  appId: '1:917195639751:web:416e7fd2e2783e9f',
-});
+// firebase.initializeApp({
+//   apiKey: 'AIzaSyCyMifCI1xfAyHlBajsyCOhSTx7A1zPOMk',
+//   authDomain: 'dtu-rm-updates-241012.firebaseapp.com',
+//   databaseURL: 'https://dtu-rm-updates-241012.firebaseio.com',
+//   projectId: 'dtu-rm-updates-241012',
+//   storageBucket: 'dtu-rm-updates-241012.appspot.com',
+//   messagingSenderId: '917195639751',
+//   appId: '1:917195639751:web:416e7fd2e2783e9f',
+// });
 
 export default class Insights extends React.Component {
   constructor(props) {
@@ -19,20 +19,20 @@ export default class Insights extends React.Component {
     this.state = {
       insights: {},
     };
-    this.DB = firebase.firestore();
-    this.internshipSubscribers = this.DB.collection('subscribers').where('subscription_type', '==', 'internship');
-    this.placementSubscribers = this.DB.collection('subscribers').where('subscription_type', '==', 'placement');
+    // this.DB = firebase.firestore();
+    // this.internshipSubscribers = this.DB.collection('subscribers').where('subscription_type', '==', 'internship');
+    // this.placementSubscribers = this.DB.collection('subscribers').where('subscription_type', '==', 'placement');
   }
 
   async componentDidMount() {
-    const internshipSnap = await this.internshipSubscribers.get();
-    const placementSnap = await this.placementSubscribers.get();
+    // const internshipSnap = await this.internshipSubscribers.get();
+    // const placementSnap = await this.placementSubscribers.get();
     this.setState({
-      insights: {
-        totalSubscribers: internshipSnap.size + placementSnap.size,
-        internshipSubscribers: internshipSnap.size,
-        placementSubscribers: placementSnap.size,
-      },
+      // insights: {
+      //   totalSubscribers: internshipSnap.size + placementSnap.size,
+      //   internshipSubscribers: internshipSnap.size,
+      //   placementSubscribers: placementSnap.size,
+      // },
     });
   }
 

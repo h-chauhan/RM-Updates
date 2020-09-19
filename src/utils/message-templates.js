@@ -1,10 +1,10 @@
 export default Object.freeze({
   WELCOME_MESSAGE: {
-    textMessage: 'Welcome to DTU RM Updates 😃 You can read the Privacy Policy here: dturmupdates.me/PrivacyPolicy.html',
+    textMessage: 'Welcome to DTU RM Updates 😃 You can read the Privacy Policy here: dturmupdates.com/PrivacyPolicy.html',
     buttons: [{
       type: 'web_url',
       title: 'Privacy Policy',
-      url: 'dturmupdates.me/PrivacyPolicy.html',
+      url: 'dturmupdates.com/PrivacyPolicy.html',
     }],
   },
   ASK_SUBSCRIBE: {
